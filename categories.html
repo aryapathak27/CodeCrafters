@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Law AI Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Cyber Law AI Assistant</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="categories.html">Categories</a>
+            <a href="login.html">Login</a>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Welcome to Cyber Law AI Assistant</h2>
+        <p>Select a category to get legal insights powered by AI.</p>
+
+        <!-- Signup Form -->
+        <div class="form-container" id="signupForm">
+            <h3>Signup</h3>
+            <input type="text" id="signupUsername" placeholder="Enter username">
+            <input type="password" id="signupPassword" placeholder="Enter password">
+            <button onclick="signup()">Signup</button>
+        </div>
+
+        <!-- Login Form -->
+        <div class="form-container" id="loginForm" style="display: none;">
+            <h3>Login</h3>
+            <input type="text" id="loginUsername" placeholder="Enter username">
+            <input type="password" id="loginPassword" placeholder="Enter password">
+            <button onclick="login()">Login</button>
+        </div>
+
+        <p id="message"></p>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
