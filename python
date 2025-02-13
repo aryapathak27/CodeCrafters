@@ -1,45 +1,35 @@
-async function askQuestion() {
-    let question = document.getElementById("user-input").value;
-    let responseDiv = document.getElementById("response");
-
-    responseDiv.innerHTML = "Thinking...";
-
-    let response = await fetch("http://127.0.0.1:5000/ask", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ question: question })
-    });
-
-    let data = await response.json();
-    responseDiv.innerHTML = "<strong>Answer:</strong> " + data.response;
-}
-
-
-
-
-
-
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-from transformers import pipeline
+import openai
 
-app = Flask(_name_)
+app = Flask(_name_, static_folder="static", template_folder="templates")
 CORS(app)
 
-# Load Hugging Face model
-chatbot = pipeline("text-generation", model="mistralai/Mistral-Small-24B-Instruct-2501", tokenizer="mistralai/Mistral-7B")
+# Set your OpenAI API key
+openai.api_key = "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"  # Replace with your actual API key
+
+@app.route("/")
+def home():
+    return render_template("index.html")  # Serve the frontend
 
 @app.route("/ask", methods=["POST"])
 def ask():
     data = request.get_json()
-    user_input = data.get("message", "")
+    user_query = data.get("question")
 
-    # Generate AI response
-    response = chatbot(user_input, max_length=100, do_sample=True)[0]["generated_text"]
+    if not user_query:
+        return jsonify({"response": "Please enter a valid question."})
 
-    return jsonify({"response": response})
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",  # Use GPT-4 if available
+        messages=[
+            {"role": "system", "content": "You are a legal AI assistant."},
+            {"role": "user", "content": user_query}
+        ]
+    )
+
+    answer = response["choices"][0]["message"]["content"]
+    return jsonify({"response": answer})
 
 if _name_ == "_main_":
     app.run(debug=True)
