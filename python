@@ -1,0 +1,45 @@
+async function askQuestion() {
+    let question = document.getElementById("user-input").value;
+    let responseDiv = document.getElementById("response");
+
+    responseDiv.innerHTML = "Thinking...";
+
+    let response = await fetch("http://127.0.0.1:5000/ask", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ question: question })
+    });
+
+    let data = await response.json();
+    responseDiv.innerHTML = "<strong>Answer:</strong> " + data.response;
+}
+
+
+
+
+
+
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from transformers import pipeline
+
+app = Flask(_name_)
+CORS(app)
+
+# Load Hugging Face model
+chatbot = pipeline("text-generation", model="mistralai/Mistral-Small-24B-Instruct-2501", tokenizer="mistralai/Mistral-7B")
+
+@app.route("/ask", methods=["POST"])
+def ask():
+    data = request.get_json()
+    user_input = data.get("message", "")
+
+    # Generate AI response
+    response = chatbot(user_input, max_length=100, do_sample=True)[0]["generated_text"]
+
+    return jsonify({"response": response})
+
+if _name_ == "_main_":
+    app.run(debug=True)
