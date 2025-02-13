@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Legal Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        #user-input{
+            width: 70%;
+            height: 20vh;
+            border-radius: 50px;
+
+        }
+        header button{
+            margin-left: 1400px;
+            
+        }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Cyber Law AI Assistant</h1>
+        <button onclick="logout()">Logout</button>
+    </header>
+
+    <main>
+        <h2>Ask Your Question</h2>
+        <p>Category: <span id="selected-category"></span></p>
+        <textarea id="user-input" placeholder="Type your question here..."></textarea><br>
+        <button onclick="sendMessage()">Ask</button>
+        <div id="chat-box"></div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
