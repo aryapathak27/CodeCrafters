@@ -20,6 +20,30 @@
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
+    <script src="script.js">
+        function askQuestion() {
+    const userInput = document.getElementById('user-input').value;
+    if (!userInput) {
+        alert("Please enter a question!");
+        return;
+    }
+
+    // Simulate getting a response (replace this with an actual API call)
+    const response = "Here’s a response related to cyber law. Let me know if you need more details!";
+    
+    const chatLog = document.getElementById('chat-log');
+    
+    // Add user message
+    chatLog.innerHTML += <div><strong>You:</strong> ${userInput}</div>;
+    
+    // Add assistant response with a delay for a better experience
+    setTimeout(() => {
+        chatLog.innerHTML += <div><strong>AI Assistant:</strong> ${response}</div>;
+        chatLog.scrollTop = chatLog.scrollHeight;  // Scroll to the bottom
+    }, 500);
+    
+    document.getElementById('user-input').value = '';
+}
+    </script>
 </body>
 </html>
